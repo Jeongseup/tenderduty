@@ -6,14 +6,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	dash "github.com/blockpane/tenderduty/v2/td2/dashboard"
-	"github.com/gorilla/websocket"
-	pbtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 	"log"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	dash "github.com/blockpane/tenderduty/v2/td2/dashboard"
+	"github.com/gorilla/websocket"
+	pbtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
 const (
@@ -233,6 +234,10 @@ func (cc *ChainConfig) WsRun() {
 			case `tendermint/event/NewBlock`:
 				blockChan <- reply
 			case `tendermint/event/Vote`:
+				voteChan <- reply
+			case `ostracon/event/NewBlock`:
+				blockChan <- reply
+			case `ostracon/event/Vote`:
 				voteChan <- reply
 			default:
 				// fmt.Println("unknown response", reply.Type())
