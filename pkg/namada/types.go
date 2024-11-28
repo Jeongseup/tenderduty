@@ -217,3 +217,51 @@ type ValidatorMetaData struct {
 		Name          *string // Validator's name, optional
 	}
 }
+
+/*
+/// Proof-of-Stake system parameters. This includes parameters that are used in
+/// PoS but are read from other accounts storage (governance).
+#[derive(
+
+	Debug, Clone, BorshDeserialize, BorshDeserializer, BorshSerialize, Serialize,
+
+)]
+
+	pub struct PosParams {
+	    /// PoS-owned params
+	    pub owned: OwnedPosParams,
+	    /// Governance param - Maximum proposal voting period in epochs.
+	    /// This param is stored in governance.
+	    pub max_proposal_period: u64,
+	}
+*/
+type PosParams struct {
+	/// PoS-owned params
+	// pub owned: OwnedPosParams,
+	/// Governance param - Maximum proposal voting period in epochs.
+	/// This param is stored in governance.
+	// pub max_proposal_period: u64,
+	Owned             OwnedPosParams
+	MaxProposalPeriod uint64
+}
+
+type OwnedPosParams struct {
+	MaxValidatorSlots             uint64
+	PipelineLen                   uint64
+	UnbondingLen                  uint64
+	TmVotesPerToken               Dec
+	BlockProposerReward           Dec
+	BlockVoteReward               Dec
+	MaxInflationRate              Dec
+	TargetStakedRation            Dec
+	DuplicateVoteMinSlashRate     Dec
+	LightClientAttackMinSlashRate Dec
+	CubicSlashingWindowLength     uint64
+	LivenessWindowCheck           uint64
+	ValidatorStakeThreshold       Amount
+	LivenessThreshold             Dec
+	RewardsGain_P                 Dec
+	RewardsGain_D                 Dec
+}
+
+type Amount Dec
